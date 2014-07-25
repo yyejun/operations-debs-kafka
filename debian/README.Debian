@@ -14,9 +14,11 @@ git-buildpackage. Below we illustrate one of the ways this can work for
 you:
 
 * Install some mandatory packages
+
   $ apt-get install git-buildpackage
 
 * And some not so mandatory but nice to have packages
+
   $ apt-get install pbuilder cowbuilder
 
 Note that pbuilder/cowbuilder is not strictly required but it will save
@@ -28,30 +30,56 @@ precise pangolin here)
   $ sudo DIST=precise git-pbuilder create --components "main universe"
 
 * Clone the repo
+
   $ git clone http://gerrit.wikimedia.org/r/operations/debs/kafka
   $ cd kafka
+
+* Build
+
+  $ DIST=precise git-buildpackage -us -uc --git-builder="git-pbuilder" \
+--git-cleaner="fakeroot debian/rules clean"
+
+or if you dont want to use git-pbuilder:
+
+  $ git-buildpackage -us -uc
+
+* Grab your packages from the directory above the one your are in, unless
+you have configured pbuilder otherwise
+
+Build a new version
+-------------------
 
 * Should the current version in the repo not be enough, set upstream and
   fetch
 
-  $ git remote add upstream http://git-wip-us.apache.org/repos/asf/kafka.git
-  $ git fetch upstream
+  $ git remote add kafka http://git-wip-us.apache.org/repos/asf/kafka.git
+  $ git fetch kafka
 
-* Checkout the version you want to build against
-  $ git checkout debian-<VERSION>
+* Tag the version you want to build against
 
-  If the current version is not enough
-  $ git checkout -b debian-<GIT_TAG> <GIT_TAG>
+  $ git tag upstream/<VERSION> <commit-ish>
 
-<GIT_TAG> should be a valid git tag. You can get them via git tag
+<VERSION> should be a valid upstream version according to the debian
+specification:
 
-* Merge the debian branch on you new branch
-  $ git merge debian
+https://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-Version
 
-* Build
-  $ DIST=precise git-buildpackage -us -uc --git-builder="git-pbuilder" \
---git-cleaner="fakeroot debian/rules clean" \
---git-debian-branch=debian-<VERSION>
+<commit-sh> can be any upstream commit like git tag, branch or a single
+commit. The best result will probably be achieved with a valid git tag
+from upstream that matches the debian upstream version specs. In that
+case <VERSION> == <commit-ish>
 
-  Or assuming you don't change the debian/gbp.conf already provided
-  $ DIST=precise git-buildpackage -us -uc --git-debian-branch=debian-<VERSION>
+* Then update the master branch to reflect that
+
+  $ git checkout master # Assuming you are not there already
+  $ git merge upstream/<VERSION>
+
+* And build as above
+
+* Should you be happy with the result, rebuild with a tag (just add the
+--git-tag argument on the previous command
+
+* Push :-). git review might not be your best friend in this btw
+
+* NOTE: Do not push new branches either upstream or yours unless you really
+know what you are doing

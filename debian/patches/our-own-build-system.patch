@@ -73,7 +73,7 @@ index 0000000..b2a9961
 +SYS_CLASSJARS:=$(shell find $(SYS_CLASSDIR) -name "*.jar")
 +export SYS_CLASSPATH:=$(shell echo $(SYS_CLASSJARS) | sed -e 's/ /:/g')
 +
-+# Same here, just this is done for the shipped jar dependencies. 
++# Same here, just this is done for the shipped jar dependencies.
 +EXT_CLASSDIR:=$(CURDIR)/ext
 +EXT_CLASSJARS:=$(shell find $(EXT_CLASSDIR) -name "*.jar")
 +export EXT_CLASSPATH:=$(shell echo $(EXT_CLASSJARS) | sed -e 's/ /:/g')
@@ -284,4 +284,4 @@ index 0000000..daeea0d
 +install:	all
 +	$(JAR) cfv kafka-perf-$(VERSION).jar -C target .
 +	$(INSTALL) -o root -g root kafka-perf-$(VERSION).jar $(DESTDIR)$(LIBPATH)/kafka-perf-$(VERSION).jar
--- 
+--

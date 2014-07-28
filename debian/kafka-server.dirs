@@ -1,2 +1,3 @@
+etc/kafka
 var/log/kafka
 var/spool/kafka

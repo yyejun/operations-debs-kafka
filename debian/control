@@ -36,7 +36,7 @@ Build-Depends: debhelper (>= 9), openjdk-7-jdk | java7-jdk, javahelper (>= 0.40)
 Standards-Version: 3.9.3
 Homepage: http://kafka.apache.org
 
-Package: kafka
+Package: kafka-common
 Architecture: all
 Depends: openjdk-7-jre | java7-runtime, scala-library, adduser, ${java:Depends}, ${misc:Depends}
 Recommends: ${java:Recommends}
@@ -50,4 +50,37 @@ Description: Apache Kafka is a distributed publish-subscribe messaging system
   distributing consumption over a cluster of consumer machines while
   maintaining per-partition ordering semantics.
   * Support for parallel data load into Hadoop.
+ .
+ This package includes common Kafka .jar files.
 
+Package: kafka-client
+Architecture: all
+Depends: kafka-common
+Description: Apache Kafka is a distributed publish-subscribe messaging system
+ Apache Kafka is designed to support the following
+  * Persistent messaging with O(1) disk structures
+  that provide constant time performance even with many TB of stored messages.
+  * High-throughput: even with very modest hardware Kafka can support hundreds
+  of thousands of messages per second.
+  * Explicit support for partitioning messages over Kafka servers and
+  distributing consumption over a cluster of consumer machines while
+  maintaining per-partition ordering semantics.
+  * Support for parallel data load into Hadoop.
+ .
+ This package includes a kafka shell script for easy interfacing with Kafka brokers.
+
+Package: kafka-server
+Architecture: all
+Depends: kafka-client
+Description: Apache Kafka is a distributed publish-subscribe messaging system
+ Apache Kafka is designed to support the following
+  * Persistent messaging with O(1) disk structures
+  that provide constant time performance even with many TB of stored messages.
+  * High-throughput: even with very modest hardware Kafka can support hundreds
+  of thousands of messages per second.
+  * Explicit support for partitioning messages over Kafka servers and
+  distributing consumption over a cluster of consumer machines while
+  maintaining per-partition ordering semantics.
+  * Support for parallel data load into Hadoop.
+ .
+ This package includes init.d scripts for Kafka Brokers and Kafka MirrorMaker daemons.

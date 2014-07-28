@@ -2,7 +2,7 @@ kafka (0.8.1.1-1) precise; urgency=low
 
   * Build new version 0.8.1.1
 
- -- Alexandros Kosiaris <akosiaris@wikimedia.org>  Wed, 16 Jul 2014 18:22:45 +0000
+ -- Andrew Otto (WMF) <otto@wikimedia.org>  Wed, 16 Jul 2014 18:22:45 +0000
 
 kafka (0.8.0-2) precise; urgency=low
 

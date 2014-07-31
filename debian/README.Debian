@@ -36,12 +36,11 @@ precise pangolin here)
 
 * Build
 
-  $ DIST=precise git-buildpackage -us -uc --git-builder="git-pbuilder" \
---git-cleaner="fakeroot debian/rules clean"
+  $ DIST=precise git-buildpackage -us -uc
 
 or if you dont want to use git-pbuilder:
 
-  $ git-buildpackage -us -uc
+  $ git-buildpackage -us -uc --git-builder=debuild
 
 * Grab your packages from the directory above the one your are in, unless
 you have configured pbuilder otherwise
@@ -74,12 +73,66 @@ case <VERSION> == <commit-ish>
   $ git checkout master # Assuming you are not there already
   $ git merge upstream/<VERSION>
 
+* Solve any potential conflicts that might arise. A very helpful way to
+do this and avoid doing too much work is:
+
+  $ git checkout --theirs -- .
+
+This works because all of our changes are in debian/ so in any kind of
+conflict the newer version from upstream should be used
+
+* Add a new debian/changelog entry
+
+  $ dch -i (don't forget to commit)
+
 * And build as above
 
-* Should you be happy with the result, rebuild with a tag (just add the
---git-tag argument on the previous command
+* Solve any problems that might arise and repeat the build
+
+* Should you be happy with the result, rebuild with a new debian tag.
+Just add the --git-tag argument on the previous command and a new
+debian/<VERSION>-revision should be present.
 
 * Push :-). git review might not be your best friend in this btw
+Don't forget to push your new tag
 
 * NOTE: Do not push new branches either upstream or yours unless you really
 know what you are doing
+
+Build trunk
+-----------
+
+The above procedure also works for building from trunk with a few
+changes:
+
+* You will have to come up with a <VERSION> to put in the changelog
+
+* <commit-ish> == trunk
+
+* Instead of
+
+  $ git checkout master
+  $ git merge upstream/<VERSION>
+
+you do a:
+
+  $ git checkout trunk (it should be linked to kafka/trunk)
+  $ git checkout master
+  $ git merge trunk
+
+* The build is going to be a bit different since we now base it on a branch
+and not a tag:
+
+  $ DIST=precise git-buildpackage -us -uc --git-upstream-tree=branch \
+--git-upstream-branch=trunk
+
+* You will probably need to solve various issues. Some might be changed
+files in trunk that have other versions in master, files that might need
+to be deleted/altered by the debian package or a variety of other
+issues. The kafka source tree is not the fairest of them all.
+Hints that might help:
+
+git checkout trunk -- <path> might come in handy
+debian/patches will also need changes
+
+but you will need your good sense in most cases

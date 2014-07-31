@@ -16,15 +16,22 @@ override_dh_install:
 	# make install installs files into debian/tmp.
 	# These files are part of the kafka-common package.
 	cp -rv $(CURDIR)/debian/tmp/usr/share/kafka/*                $(CURDIR)/debian/kafka-common/usr/share/kafka/
-	cp -rv $(CURDIR)/debian/tmp/etc/kafka/tools-log4j.properties $(CURDIR)/debian/kafka-common/etc/kafka/
+
+	# These files are part of the kafka-client package.
+	cp -rv $(CURDIR)/debian/tmp/etc/kafka/tools-log4j.properties $(CURDIR)/debian/kafka-client/etc/kafka/
+	cp -rv $(CURDIR)/debian/tmp/etc/kafka/log4j.properties       $(CURDIR)/debian/kafka-client/etc/kafka/
+
 	# These files are part of the kafka-server package.
-	cp -rv $(CURDIR)/debian/tmp/etc/kafka/mirror                 $(CURDIR)/debian/kafka-server/etc/kafka/
 	cp -rv $(CURDIR)/debian/tmp/etc/kafka/server.properties      $(CURDIR)/debian/kafka-server/etc/kafka/
 	cp -rv $(CURDIR)/debian/tmp/etc/kafka/zookeeper.properties   $(CURDIR)/debian/kafka-server/etc/kafka/
+
+	# These files are part of the kafka-mirror package
+	cp -rv $(CURDIR)/debian/tmp/etc/kafka/mirror                 $(CURDIR)/debian/kafka-mirror/etc/kafka/
 
 override_dh_installinit:
 	# Install kafka-server.kafka init.d and default scripts under the name 'kafka'.
 	dh_installinit --name=kafka
 
-	# Install kafka-server.kafka-mirror init.d and default scripts under the name 'kafka-mirror'.
-	dh_installinit --name=kafka-mirror
+	# Install kafka-mirror init.d and default scripts under their default name 'kafka-mirror'.
+	dh_installinit
+

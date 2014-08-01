@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# postrm script for kafka
+# postrm script for kafka-client
 #
 # see: dh_installdeb(1)
 

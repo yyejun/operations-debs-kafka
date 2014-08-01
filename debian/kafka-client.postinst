@@ -22,7 +22,6 @@ case "$1" in
 
         # chown kafka directories
         chown kafka:kafka /var/log/kafka
-        chown kafka:kafka /var/spool/kafka
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

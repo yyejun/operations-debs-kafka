@@ -1,3 +1,9 @@
+kafka (0.8.1.1-4) precise; urgency=low
+
+  * Export $CLASSPATH from init scripts
+
+ -- Patrick Lucas <plucas@yelp.com>  Wed, 22 Oct 2014 18:17:57 -0700
+
 kafka (0.8.1.1-3) precise; urgency=low
 
   * chown /var/spool/kafka/ in kafka-server.postinst

@@ -194,7 +194,7 @@ case "$1" in
 	if [ -f "$KAFKA_MIRROR_PID" ]; then
 		start-stop-daemon --stop --pidfile "$KAFKA_MIRROR_PID" \
 			--user "$KAFKA_USER" \
-			--retry=TERM/20/KILL/5 >/dev/null
+			--retry=TERM/60/KILL/5 >/dev/null
 		if [ $? -eq 1 ]; then
 			log_progress_msg "$DESC is not running but pid file exists, cleaning up"
 		elif [ $? -eq 3 ]; then

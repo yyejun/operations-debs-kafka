@@ -1,3 +1,12 @@
+kafka (0.8.1.1-6) precise; urgency=low
+
+  * Use generic snappy version in bin/kafka CLASSPATH
+  * Remove duplicate slf4j-api.jar in bin/kafka CLASSPATH definition
+  * Remove same duplicate in debian/rules
+  * Fix typo in debian/rules
+
+ -- Federico Giraud <fgiraud@yelp.com>  Wed, 26 Nov 2014 12:12:30 -0800
+
 kafka (0.8.1.1-5) precise; urgency=low
 
   * Increase kill timeout on shutdown.

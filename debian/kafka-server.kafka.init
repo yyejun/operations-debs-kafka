@@ -49,7 +49,7 @@ KAFKA_GROUP=kafka
 KAFKA_CONFIG=/etc/kafka
 KAFKA_START=yes
 
-JDK_DIRS="/usr/lib/jvm/* /usr/lib/jvm/default-java"
+JDK_DIRS="/usr/lib/jvm/*"
 
 # Look for the right JVM to use
 for jdir in $JDK_DIRS; do

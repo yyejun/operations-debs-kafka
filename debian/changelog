@@ -1,3 +1,9 @@
+kafka (0.8.2.0-1yelp1) lucid; urgency=low
+
+  * Update version 
+
+ -- Yejun Yang <yejun@yelp.com>  Wed, 11 Mar 2015 11:11:08 -0700
+
 kafka (0.8.1.1-6) precise; urgency=low
 
   * Use generic snappy version in bin/kafka CLASSPATH

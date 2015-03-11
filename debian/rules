@@ -3,8 +3,6 @@
 export JAVA_HOME?=/usr/lib/jvm/java-1.7.0-openjdk-amd64
 export PREFIX=/usr
 export SYSCONFDIR=/etc/kafka
-export SCALAVERSION=2.9.2
-export VERSION=0.8.2.0
 
 %:
 	dh $@
@@ -14,7 +12,7 @@ override_dh_install:
 	# make install installs files into debian/tmp.
 	# These files are part of the kafka-common package.
 	mkdir debian/tmp
-	tar xf ../kafka_$(SCALAVERSION)-$(VERSION).tgz -C debian/tmp --strip-components=1
+	tar xf ../kafka_$(SCALA_VERSION)-$(KAFKA_VERSION).tgz -C debian/tmp --strip-components=1
 	cp -v $(CURDIR)/debian/tmp/libs/*                $(CURDIR)/debian/kafka-common/usr/share/kafka/
 
 	# These files are part of the kafka-client package.

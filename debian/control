@@ -8,7 +8,7 @@ Homepage: http://kafka.apache.org
 
 Package: kafka-common
 Architecture: all
-Depends: openjdk-7-jre | java7-runtime, scala-library, adduser, ${java:Depends}, ${misc:Depends}
+Depends: openjdk-7-jre | java7-runtime, adduser, ${java:Depends}, ${misc:Depends}
 Recommends: ${java:Recommends}
 Description: Apache Kafka is a distributed publish-subscribe messaging system
  Apache Kafka is designed to support the following

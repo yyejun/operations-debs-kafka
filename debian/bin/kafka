@@ -36,15 +36,13 @@ Commands:
   $SCRIPT_NAME mirror-maker               [opts]
   $SCRIPT_NAME consumer-offset-checker    [opts]
 
-  $SCRIPT_NAME add-partitions             [opts]
   $SCRIPT_NAME reassign-partitions        [opts]
-  $SCRIPT_NAME check-reassignment-status  [opts]
   $SCRIPT_NAME preferred-replica-election [opts]
-  $SCRIPT_NAME controlled-shutdown        [opts]
 
   $SCRIPT_NAME producer-perf-test         [opts]
   $SCRIPT_NAME consumer-perf-test         [opts]
-  $SCRIPT_NAME simple-consumer-perf-test  [opts]
+
+  $SCRIPT_NAME replica-verification       [opts]
 
   $SCRIPT_NAME server-start               [-daemon] <server.properties> (Default: $KAFKA_CONFIG/server.properties)
   $SCRIPT_NAME server-stop
@@ -170,21 +168,12 @@ cmd_topic() {
 cmd_console_producer() {
     export JMX_PORT="${JMX_PORT:-9990}"
     export KAFKA_HEAP_OPTS="${KAFKA_HEAP_OPTS:--Xmx512M}"
-    kafka_run_class kafka.producer.ConsoleProducer "$@"
+    kafka_run_class kafka.tools.ConsoleProducer "$@"
 }
 
 cmd_console_consumer() {
     export KAFKA_HEAP_OPTS="${KAFKA_HEAP_OPTS:--Xmx512M}"
-    kafka_run_class kafka.consumer.ConsoleConsumer $ZOOKEEPER_OPT "$@"
-}
-
-cmd_consumer_shell() {
-    kafka_run_class kafka.tools.ConsumerShell $ZOOKEEPER_OPT "$@"
-}
-
-cmd_producer_shell() {
-    export JMX_PORT="${JMX_PORT:-9991}"
-    kafka_run_class kafka.tools.ProducerShell "$@"
+    kafka_run_class kafka.tools.ConsoleConsumer $ZOOKEEPER_OPT "$@"
 }
 
 cmd_simple_consumer_shell() {
@@ -219,39 +208,26 @@ cmd_consumer_offset_checker() {
     kafka_run_class kafka.tools.ConsumerOffsetChecker $ZOOKEEPER_OPT "$@"
 }
 
-cmd_add_partitions() {
-    kafka_run_class kafka.admin.AddPartitionsCommand $ZOOKEEPER_OPT "$@"
-}
-
 cmd_reassign_partitions() {
     kafka_run_class kafka.admin.ReassignPartitionsCommand $ZOOKEEPER_OPT "$@"
-}
-
-cmd_check_reassignment_status() {
-    kafka_run_class kafka.admin.CheckReassignmentStatus $ZOOKEEPER_OPT "$@"
 }
 
 cmd_preferred_replica_election() {
     kafka_run_class kafka.admin.PreferredReplicaLeaderElectionCommand $ZOOKEEPER_OPT "$@"
 }
 
-cmd_controlled_shutdown() {
-    kafka_run_class kafka.admin.ShutdownBroker $ZOOKEEPER_OPT "$@"
-}
-
-
 cmd_producer_perf_test() {
     export KAFKA_HEAP_OPTS="${KAFKA_HEAP_OPTS:-"-Xmx512M"}"
-    kafka_run_class kafka.perf.ProducerPerformance "$@"
-}
-cmd_consumer_perf_test() {
-    export KAFKA_HEAP_OPTS="${KAFKA_HEAP_OPTS:-"-Xmx512M"}"
-    kafka_run_class kafka.perf.ConsumerPerformance $ZOOKEEPER_OPT "$@"
+    kafka_run_class kafka.tools.ProducerPerformance "$@"
 }
 
-cmd_simple_consumer_perf_test() {
+cmd_consumer_perf_test() {
     export KAFKA_HEAP_OPTS="${KAFKA_HEAP_OPTS:-"-Xmx512M"}"
-    kafka_run_class kafka.tools.SimpleConsumerPerformance $ZOOKEEPER_OPT "$@"
+    kafka_run_class kafka.tools.ConsumerPerformance $ZOOKEEPER_OPT "$@"
+}
+
+cmd_replica_verification() {
+    kafka_run_class kafka.tools.ReplicaVerificationTool $ZOOKEEPER_OPT "$@"
 }
 
 cmd_server_start() {
@@ -349,14 +325,11 @@ do
     replay-log-producer             | \
     mirror-maker                    | \
     consumer-offset-checker         | \
-    add-partitions                  | \
     reassign-partitions             | \
-    check-reassignment-status       | \
     preferred-replica-election      | \
-    controlled-shutdown             | \
     producer-perf-test              | \
     consumer-perf-test              | \
-    simple-consumer-perf-test       | \
+    replica-verification            | \
     server-start                    | \
     server-stop                     | \
     zookeeper-start                 | \

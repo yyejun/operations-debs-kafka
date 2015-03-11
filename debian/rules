@@ -14,7 +14,7 @@ override_dh_install:
 	# make install installs files into debian/tmp.
 	# These files are part of the kafka-common package.
 	mkdir debian/tmp
-	tar xf kafka_$(SCALAVERSION)-$(VERSION).tgz -C debian/tmp --strip-components=1
+	tar xf ../kafka_$(SCALAVERSION)-$(VERSION).tgz -C debian/tmp --strip-components=1
 	cp -v $(CURDIR)/debian/tmp/libs/*                $(CURDIR)/debian/kafka-common/usr/share/kafka/
 
 	# These files are part of the kafka-client package.

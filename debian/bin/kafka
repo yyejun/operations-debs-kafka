@@ -327,7 +327,7 @@ cmd_zookeeper_shell() {
         ARGS="-server ${ZOOKEEPER_URL} $@"
     fi
 
-    echo kafka_run_class org.apache.zookeeper.ZooKeeperMain $ARGS
+    kafka_run_class org.apache.zookeeper.ZooKeeperMain $ARGS
 }
 
 
